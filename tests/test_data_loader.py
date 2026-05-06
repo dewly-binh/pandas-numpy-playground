@@ -1,9 +1,10 @@
-import pytest
-import pandas as pd
-from pathlib import Path
-from src.data_loader import load_csv, validate_file
-import tempfile
 import os
+import tempfile
+
+import pandas as pd
+import pytest
+
+from src.data_loader import load_csv, validate_file
 
 
 class TestValidateFile:
