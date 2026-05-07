@@ -24,7 +24,6 @@ def sample_df():
         "Bonus %": [10.0, 15.0, 12.0, 8.0, 20.0],
         "Senior Management": ["True", "False", "True", "False", "True"],
         "Last Login Time": ["09:00 AM", "10:30 AM", "02:15 PM", "11:45 AM", "04:00 PM"],
-        "Team": ["Dev", None, "Dev", "Accounting", "Recruit"],
         "Salary": [50000, 45000, 55000, 60000, 48000],
     }
     return pd.DataFrame(data)
@@ -48,7 +47,6 @@ class TestClean:
             "bonus_pct",
             "senior_management",
             "last_login_time",
-            "team",
             "salary",
         ]
         assert list(analyzer._df.columns) == expected_columns
@@ -87,11 +85,21 @@ class TestClean:
         # Correct expected value is "Unknown" (code currently has typo "Unknow")
         assert "Unknown" in analyzer._df["gender"].values
 
-    def test_clean_fills_missing_team(self, sample_df):
-        analyzer = DataAnalyzer(sample_df.copy())
+    def test_clean_fills_missing_department(self):
+        """Test that missing department values are filled with 'Unknown'."""
+        df = pd.DataFrame({
+            "First Name": ["Alice", "Bob"],
+            "Gender": ["Female", "Male"],
+            "Start Date": ["2023-01-01", "2023-01-02"],
+            "Last Login Time": ["09:00 AM", "10:00 AM"],
+            "Salary": [50000, 60000],
+            "Bonus %": [10.0, 12.0],
+            "Senior Management": ["True", "False"],
+            "Department": ["Engineering", None],
+        })
+        analyzer = DataAnalyzer(df)
         analyzer.clean()
-        # Correct expected value is "Unknown" (code currently has typo "Unknow")
-        assert "Unknown" in analyzer._df["team"].values
+        assert "Unknown" in analyzer._df["department"].values
 
     def test_clean_renames_bonus_column(self, sample_df):
         analyzer = DataAnalyzer(sample_df.copy())
