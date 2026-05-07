@@ -27,8 +27,8 @@ class DataAnalyzer:
             self._df["first_name"] = self._df["first_name"].fillna("Unknown")
         if "gender" in self._df.columns:
             self._df["gender"] = self._df["gender"].fillna("Unknown")
-        if "team" in self._df.columns:
-            self._df["team"] = self._df["team"].fillna("Unknown")
+        if "department" in self._df.columns:
+            self._df["department"] = self._df["department"].fillna("Unknown")
 
         self._df.rename(columns={"bonus_%": "bonus_pct"}, inplace=True)
 
